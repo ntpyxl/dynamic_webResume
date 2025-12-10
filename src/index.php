@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
 
     <title>Francis Abaya Resume</title>
 </head>
+
 <body class="flex bg-gray-900 text-white">
     <aside class="sticky top-0 h-screen px-3 py-1 bg-gray-800 drop-shadow-xl">
         <nav class="flex flex-col h-full justify-between">
@@ -38,16 +40,24 @@
                 </template>
             </div>
 
-            <!-- TODO: Remove on static; should only be on dynamic webpage, entry point to login/dashboard -->
-            <div class="relative group mb-3">
-                <div class="flex w-10 p-2 text-2xl rounded-2xl justify-center hover:bg-gray-700 cursor-pointer select-none">
-                    <i class="fa-solid fa-gears"></i>
+            <div x-data="{ modalOpen: false }">
+                <div class="relative group mb-3">
+                    <div
+                        @click="modalOpen = !modalOpen"
+                        class="flex w-10 p-2 text-2xl rounded-2xl justify-center hover:bg-gray-700 cursor-pointer select-none">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+
+                    <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-2 rounded-lg bg-gray-800 text-white opacity-0 whitespace-nowrap text-sm group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 shadow-lg">
+                        Settings
+                    </div>
                 </div>
 
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-2 rounded-lg bg-gray-800 text-white opacity-0 whitespace-nowrap text-sm pointer-events-none
-                            group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 shadow-lg">
-                    Settings
-                </div>
+                <template x-teleport="body">
+                    <div x-show="modalOpen" x-cloak x-transition>
+                        <?php include 'components/editLoginEntry.php' ?>
+                    </div>
+                </template>
             </div>
 
         </nav>
@@ -153,7 +163,7 @@
                                     <span x-text="project.Description"></span>
                                 </p>
                             </div>
-                            
+
                             <a
                                 :href="project.Link"
                                 target="_blank"
@@ -163,7 +173,7 @@
                         </div>
                     </div>
                 </template>
-                
+
             </div>
 
             <a
@@ -179,7 +189,7 @@
             x-data="educationCertificationComponent()"
             class="flex flex-col mx-16 my-16">
             <h3 class="font-bold text-6xl">Education and Certifications</h3>
-            
+
             <!-- Education and Certifications: Can be edited in dynamic webpage -->
             <!-- TODO: In dynamic webpage, sort certifications first before education? -->
             <div class="flex flex-wrap p-3 justify-center items-stretch gap-5">
@@ -224,6 +234,7 @@
             </div>
         </div>
     </main>
-     
+
 </body>
+
 </html>
