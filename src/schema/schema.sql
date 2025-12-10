@@ -24,6 +24,7 @@ CREATE TABLE techSkillSubcategories (
 CREATE TABLE projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
     project_name VARCHAR(256) NOT NULL,
+    project_image_filename TEXT NOT NULL,
     project_description TEXT NOT NULL,
     project_repository TEXT NOT NULL
 );
@@ -53,17 +54,21 @@ INSERT INTO techSkillSubcategories (subcategory_name, subcategory_content) VALUE
     ('Back-end', 'PHP. MySQL'),
     ('Programming', 'Python. Java. C++');
 
-INSERT INTO projects (project_name, project_description, project_repository) VALUES
+INSERT INTO projects (project_name, project_image_filename, project_description, project_repository) VALUES
     ('To-Do List using ReactJS',
+    'to_do_list_screenshot.png',
     'First project while learning ReactJS and Vite.',
     'https://github.com/ntpyxl/ToDo-List'),
     ('Order Management System',
+    'order_mgt_sys_screenshot.png',
     'Made along with AlpineJS. A system where cashiers can add items into the inventory and view transaction history, and admins, along with cashier priveleges, can also manage cashier accounts and status.',
     'https://github.com/ntpyxl/orderManagementSystem-withAlpineJS'),
     ('PixelType',
+    'doc_edit_screenshot.png',
     'A document editor (or Google Docs ''clone'') with version history, document sharing and editing, and chat features.',
     'https://github.com/ntpyxl/PixelType-Docs-Clone'),
     ('Social Media Site',
+    'socmed_site_screenshot.png',
     'A simple social media website where you can post and comment on posts.',
     'https://github.com/ntpyxl/SocMedSite');
 

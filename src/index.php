@@ -16,6 +16,7 @@
     <script src="scripts/projectComponent.js"></script>
     <script src="scripts/educationComponent.js"></script>
     <script src="scripts/contactComponent.js"></script>
+    <script src="scripts/userComponent.js"></script>
 
     <title>Francis Abaya Resume</title>
 </head>
@@ -83,6 +84,7 @@
         <div
             id="aboutMeSection"
             x-data="aboutMeComponent()"
+            x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 mt-64 mb-12">
             <h3 class="font-bold text-6xl">About Me</h3>
             <!-- Intro: Can be edited in dynamic webpage -->
@@ -120,6 +122,7 @@
         <div
             id="technicalSkillSection"
             x-data="techSkillComponent()"
+            x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <!-- Technical Skills: Can be edited in dynamic webpage -->
             <h3 class="font-bold text-6xl">Technical Skills</h3>
@@ -142,6 +145,7 @@
         <div
             id="projectSection"
             x-data="projectComponent()"
+            x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <h3 class="font-bold text-6xl">Projects</h3>
 
@@ -187,6 +191,7 @@
         <div
             id="educationSection"
             x-data="educationCertificationComponent()"
+            x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <h3 class="font-bold text-6xl">Education and Certifications</h3>
 

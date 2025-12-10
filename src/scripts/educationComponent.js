@@ -6,22 +6,35 @@ function educationCertificationComponent() {
             "Certificate": "fa-solid fa-certificate"
         },
 
-        "certifications": {
-            "Emilio Aguinaldo College - Cavite (SHS)": {
-                "Type": "Education",
-                "Description": "I graduated with honors under the strand of Technical-Vocational Livelihood - Information and Communication Technology on June 2022."
-            },
+        "certifications": {},
 
-            "Introduction to DevOps": {
-                "Type": "Certificate",
-                "Description": "A coursera course published by IBM. Issued to me on August 2024. I learned about how the DevOps and agile software development life cycle works."
-            },
+        async getData() {
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "action": "getData_Education" }),
+                });
 
-            "Python for Data Science, AI & Development": {
-                "Type": "Certificate",
-                "Description": "A Coursera course published by IBM. Issued to me on July 2024. I learned about how to use Python and libraries such as numpy, pandas, and matplotlib in the field of Data Science."
+            const result = await response.json();
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message || "Request failed");
             }
-            
+
+            return result.data;
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async loadParseData(data) {
+            for (let education of data) {
+                this.certifications[education.education_name] = {
+                    "Type": education.education_type,
+                    "Description": education.education_description
+                }
+            }
         }
     }
 }

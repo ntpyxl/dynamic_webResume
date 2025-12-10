@@ -12,13 +12,17 @@
             </div>
         </div>
 
-        <form class="flex flex-col py-3 gap-5">
+        <form
+            x-data="userComponent()"
+            class="flex flex-col py-3 gap-5">
             <div class="flex flex-col gap-3">
                 <div class="flex flex-col">
                     <p class="w-full text-xl select-none cursor-default">Username</p>
                     <input
                         type="text"
-                        class="border px-3 py-1 border-white rounded-2xl">
+                        x-model="loginForm.username"
+                        class="border px-3 py-1 border-white rounded-2xl"
+                        required>
                     </input>
                 </div>
 
@@ -26,13 +30,16 @@
                     <p class="w-full text-xl select-none cursor-default">Password</p>
                     <input
                         type="password"
-                        class="border px-3 py-1 border-white rounded-2xl">
+                        x-model="loginForm.password"
+                        class="border px-3 py-1 border-white rounded-2xl"
+                        required>
                     </input>
                 </div>
             </div>
 
             <div class="flex w-full justify-end">
                 <button
+                    @click="loginUser()"
                     class="px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
                     Login
                 </button>

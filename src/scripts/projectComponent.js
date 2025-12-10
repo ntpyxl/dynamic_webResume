@@ -1,30 +1,35 @@
 function projectComponent() {
     return {
-        "projects": {
-            "To-Do List using ReactJS": {
-                "Image": "to_do_list_screenshot.png",
-                "Description": "First project while learning ReactJS and Vite.",
-                "Link": "https://github.com/ntpyxl/ToDo-List"
-            },
+        "projects": {},
 
-            "Order Management System": {
-                "Image": "order_mgt_sys_screenshot.png",
-                "Description": "Made along with AlpineJS. A system where cashiers can add items into the inventory and view transaction history, and admins, along with cashier priveleges, can also manage cashier accounts and status.",
-                "Link": "https://github.com/ntpyxl/orderManagementSystem-withAlpineJS"
-            },
+        async getData() {
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "action": "getData_Projects" }),
+                });
 
-            "PixelType": {
-                "Image": "doc_edit_screenshot.png",
-                "Description": "A document editor (or Google Docs 'clone') with version history, document sharing and editing, and chat features.",
-                "Link": "https://github.com/ntpyxl/PixelType-Docs-Clone"
-            },
-
-            "Social Media Site": {
-                "Image": "socmed_site_screenshot.png",
-                "Description": "A simple social media website where you can post and comment on posts.",
-                "Link": "https://github.com/ntpyxl/SocMedSite"
+            const result = await response.json();
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message || "Request failed");
             }
 
+            return result.data;
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async loadParseData(data) {
+            for (let project of data) {
+                this.projects[project.project_name] = {
+                    "Image": project.project_image_filename,
+                    "Description": project.project_description,
+                    "Link": project.project_repository
+                }
+            }
         }
     }
 }
