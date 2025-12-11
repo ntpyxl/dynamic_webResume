@@ -33,7 +33,7 @@
                 <p class="text-xl select-none cursor-default">Type</p>
                 <select
                     x-model="form.Type"
-                    class="border px-3 py-1 border-white rounded-2xl"
+                    class="border px-3 py-1 border-white bg-gray-800 rounded-2xl"
                     required>
                     <option value="Education" default>Education</option>
                     <option value="Certificate">Certificate</option>

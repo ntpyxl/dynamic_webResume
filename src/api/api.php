@@ -151,7 +151,7 @@ if ($action == "loginUser") {
     $statement->execute([$formData['username']]);
     $userData = $statement->fetch();
 
-    // email check
+    // username check
     if ($userData === false) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Username does not exist yet.']);
