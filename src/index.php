@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,10 +87,23 @@
 
         <div
             id="aboutMeSection"
-            x-data="aboutMeComponent()"
+            x-data="{ ...aboutMeComponent(),  modalOpen: false }"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 mt-64 mb-12">
-            <h3 class="font-bold text-6xl">About Me</h3>
+            <h3 class="flex flex-row font-bold text-6xl items-center">
+                About Me
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <div
+                        @click="
+                            openModal();
+                            modalOpen = !modalOpen;
+                            document.body.classList.toggle('modal-open', modalOpen);
+                        "
+                        class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                <?php } ?>
+            </h3>
             <!-- Intro: Can be edited in dynamic webpage -->
             <p class="text-2xl font-light wrap-break-word">
                 <span x-text="intro"></span>
@@ -117,15 +134,34 @@
                     </template>
                 </div>
             </div>
+
+            <template x-teleport="body">
+                <div x-show="modalOpen" x-cloak x-transition>
+                    <?php include 'components/cud_aboutMeModal.php' ?>
+                </div>
+            </template>
         </div>
 
         <div
             id="technicalSkillSection"
-            x-data="techSkillComponent()"
+            x-data="{ ...techSkillComponent(), modalOpen: false }"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <!-- Technical Skills: Can be edited in dynamic webpage -->
-            <h3 class="font-bold text-6xl">Technical Skills</h3>
+            <h3 class="flex flex-row font-bold text-6xl items-center">
+                Technical Skills
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <div
+                        @click="
+                            openModal();
+                            modalOpen = !modalOpen;
+                            document.body.classList.toggle('modal-open', modalOpen);
+                        "
+                        class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                <?php } ?>
+            </h3>
             <div class="flex flex-wrap p-3 justify-center items-start gap-16">
                 <template x-for="(category, name) in subcategories" :key="name">
                     <div class="flex flex-col">
@@ -140,18 +176,36 @@
                     </div>
                 </template>
             </div>
+
+            <template x-teleport="body">
+                <div x-show="modalOpen" x-cloak x-transition>
+                    <?php include 'components/cud_techSkillModal.php' ?>
+                </div>
+            </template>
         </div>
 
         <div
             id="projectSection"
-            x-data="projectComponent()"
+            x-data="{ ...projectComponent(), modalOpen: false }"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
-            <h3 class="font-bold text-6xl">Projects</h3>
+            <h3 class="flex flex-row font-bold text-6xl items-center">
+                Projects
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <div
+                        @click="
+                            modalOpen = !modalOpen;
+                            document.body.classList.toggle('modal-open', modalOpen);
+                        "
+                        class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                <?php } ?>
+            </h3>
 
             <!-- Projects: Can be edited in dynamic webpage -->
             <div class="flex flex-wrap p-3 justify-center items-stretch gap-5">
-                <template x-for="(project, name) in projects" :key="name">
+                <template x-for="(project, name) in projects" :key="project.Id">
                     <div class="flex flex-col w-[400px] bg-gray-800 rounded-2xl">
                         <img
                             :src="`images/${project.Image}`"
@@ -168,12 +222,24 @@
                                 </p>
                             </div>
 
-                            <a
-                                :href="project.Link"
-                                target="_blank"
-                                class="w-fit mx-auto px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
-                                View GitHub Repository
-                            </a>
+                            <div class="flex flex-row justify-around gap-3">
+                                <a
+                                    :href="project.Link"
+                                    target="_blank"
+                                    class="w-fit px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
+                                    View GitHub Repository
+                                </a>
+                                <?php if (isset($_SESSION['user_id'])) { ?>
+                                    <div
+                                        class="w-fit px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </div>
+                                    <div
+                                        class="w-fit px-5 py-1 border-2 border-white rounded-4xl hover:border-red-500 hover:bg-red-500 hover:text-black duration-150 cursor-pointer select-none">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -186,26 +252,55 @@
                 class="w-fit mx-auto mt-5 px-12 py-3 border-2 border-white rounded-4xl text-xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
                 See More - Visit my GitHub
             </a>
+
+            <template x-teleport="body">
+                <div x-show="modalOpen" x-cloak x-transition>
+                    <?php include 'components/c_projectModal.php' ?>
+                </div>
+            </template>
         </div>
 
         <div
             id="educationSection"
-            x-data="educationCertificationComponent()"
+            x-data="{ ...educationCertificationComponent(), modalOpen: false }"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
-            <h3 class="font-bold text-6xl">Education and Certifications</h3>
+            <h3 class="flex flex-row font-bold text-6xl items-center">
+                Education and Certifications
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <div
+                        @click="
+                            modalOpen = !modalOpen;
+                            document.body.classList.toggle('modal-open', modalOpen);
+                        "
+                        class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                <?php } ?>
+            </h3>
 
             <!-- Education and Certifications: Can be edited in dynamic webpage -->
-            <!-- TODO: In dynamic webpage, sort certifications first before education? -->
             <div class="flex flex-wrap p-3 justify-center items-stretch gap-5">
-                <template x-for="(certification, name) in certifications" :key="name">
+                <template x-for="(certification, name) in certifications" :key="certification.Id">
                     <div class="w-[400px] bg-gray-800 rounded-2xl">
                         <div class="flex flex-col p-5 space-y-5">
-                            <div>
-                                <p class="font-light text-sm text-gray-300">
-                                    <i :class="icons[certification.Type]"></i>
-                                    <span x-text="certification.Type"></span>
-                                </p>
+                            <div class="font-light text-sm text-gray-300">
+                                <div class="flex flex-row justify-between">
+                                    <p>
+                                        <i :class="icons[certification.Type]"></i>
+                                        <span x-text="certification.Type"></span>
+                                    </p>
+                                    <?php if (isset($_SESSION['user_id'])) { ?>
+                                        <div class="flex flex-row gap-3">
+                                            <div class="px-2 py-1 hover:bg-gray-600 rounded-2xl cursor-pointer select-none">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </div>
+                                            <div class="px-2 py-1 hover:bg-gray-600 hover:text-red-400 rounded-2xl cursor-pointer select-none">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                                 <h5 class="font-bold text-xl">
                                     <span x-text="name"></span>
                                 </h5>
@@ -217,6 +312,12 @@
                     </div>
                 </template>
             </div>
+
+            <template x-teleport="body">
+                <div x-show="modalOpen" x-cloak x-transition>
+                    <?php include 'components/c_educationModal.php' ?>
+                </div>
+            </template>
         </div>
 
         <div id="contactSection" class="flex flex-col mx-16 my-16">

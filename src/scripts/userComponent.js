@@ -15,11 +15,17 @@ function userComponent() {
                 throw new Error(result.message || "Request failed");
             }
 
+            // TODO: SWAL modal here, THEN reload on confirm
             window.location.reload();
 
             } catch (error) {
+                // TODO: SWAL modal here
                 console.log(error);
             }
+        },
+
+        async logoutUser() {
+            window.location.href = "logout.php";
         }
     }
 }
