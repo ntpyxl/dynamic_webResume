@@ -235,6 +235,7 @@ session_start();
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </div>
                                     <div
+                                        @click="deleteProject(project)"
                                         class="w-fit px-5 py-1 border-2 border-white rounded-4xl hover:border-red-500 hover:bg-red-500 hover:text-black duration-150 cursor-pointer select-none">
                                         <i class="fa-solid fa-trash"></i>
                                     </div>
@@ -295,7 +296,9 @@ session_start();
                                             <div class="px-2 py-1 hover:bg-gray-600 rounded-2xl cursor-pointer select-none">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </div>
-                                            <div class="px-2 py-1 hover:bg-gray-600 hover:text-red-400 rounded-2xl cursor-pointer select-none">
+                                            <div
+                                                @click="deleteCertificate(certification)"
+                                                class="px-2 py-1 hover:bg-gray-600 hover:text-red-400 rounded-2xl cursor-pointer select-none">
                                                 <i class="fa-solid fa-trash"></i>
                                             </div>
                                         </div>

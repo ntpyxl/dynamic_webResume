@@ -111,6 +111,14 @@ if ($action == "getData_Projects") {
     exit;
 }
 
+if ($action == "deleteData_Projects") {
+    $statement = $pdo->prepare('DELETE FROM projects WHERE id = ?');
+    $statement->execute([$formData['project_id']]);
+
+    echo json_encode(['success' => true]);
+    exit;
+}
+
 
 if ($action == "createData_Education") {
     $statement = $pdo->prepare('INSERT INTO education (education_name, education_type, education_description) VALUES (?, ?, ?)');
@@ -126,6 +134,14 @@ if ($action == "getData_Education") {
     $educationData = $statement->fetchAll();
 
     echo json_encode(['success' => true, 'data' => $educationData]);
+    exit;
+}
+
+if ($action == "deleteData_Education") {
+    $statement = $pdo->prepare('DELETE FROM education WHERE id = ?');
+    $statement->execute([$formData['certificate_id']]);
+
+    echo json_encode(['success' => true]);
     exit;
 }
 

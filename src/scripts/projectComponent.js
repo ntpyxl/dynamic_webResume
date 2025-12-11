@@ -34,6 +34,7 @@ function projectComponent() {
         },
 
         async loadParseData(data) {
+            this.projects = {};
             for (let project of data) {
                 this.projects[project.project_name] = {
                     "Id": project.id,
@@ -86,6 +87,33 @@ function projectComponent() {
                     body: JSON.stringify({
                         "action": "createData_Projects",
                         "data": this.form
+                    }),
+                });
+
+            const result = await response.json();
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message || "Request failed");
+            }
+
+            this.getData().then(data => this.loadParseData(data));
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deleteProject(project) {
+            const formData = {
+                project_id: project.Id,
+            };
+
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "action": "deleteData_Projects",
+                        "data": formData
                     }),
                 });
 

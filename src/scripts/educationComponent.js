@@ -37,6 +37,7 @@ function educationCertificationComponent() {
         },
 
         async loadParseData(data) {
+            this.certifications = {};
             for (let education of data) {
                 this.certifications[education.education_name] = {
                     "Id": education.id,
@@ -54,6 +55,33 @@ function educationCertificationComponent() {
                     body: JSON.stringify({
                         "action": "createData_Education",
                         "data": this.form
+                    }),
+                });
+
+            const result = await response.json();
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message || "Request failed");
+            }
+
+            this.getData().then(data => this.loadParseData(data));
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deleteCertificate(certificate) {
+            const formData = {
+                certificate_id: certificate.Id,
+            };
+
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "action": "deleteData_Education",
+                        "data": formData
                     }),
                 });
 
