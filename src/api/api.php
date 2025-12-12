@@ -102,9 +102,9 @@ if (isset($_POST['action']) && $_POST['action'] === 'uploadImage_Projects') {
     exit;
 }
 
-if ($action == "updateData_Projects") {
-    $statement = $pdo->prepare('INSERT INTO projects (education_name, education_type, education_description) VALUES (?, ?, ?)');
-    $statement->execute([$formData['Title'], $formData['Type'], $formData['Description']]);
+if ($action == "saveData_Projects") {
+    $statement = $pdo->prepare('UPDATE projects SET project_name = ?, project_image_filename = ?, project_description = ?, project_repository = ? WHERE id = ?');
+    $statement->execute([$formData['Title'], $formData['ImageName'], $formData['Description'], $formData['Link'], $formData['Id']]);
 
     echo json_encode(['success' => true]);
     exit;

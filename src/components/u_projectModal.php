@@ -2,13 +2,13 @@
     <div class="max-w-[600px] max-h-4/5 overflow-y-auto bg-gray-800 px-6 py-4 rounded-xl shadow-xl relative">
         <div class="flex w-full justify-between">
             <p class="mr-3 mt-2 mb-1 font-light">
-                Do you want to edit this Education and Certifications?
+                Do you want to edit this Project?
             </p>
 
             <div
                 @click="
                     closeModal();
-                    updateModalOpen = !updateModalOpen;
+                    updateModalOpen = !updateModalOpen
                     document.body.classList.remove('modal-open');
                 "
                 class="flex w-10 h-10 p-2 text-2xl rounded-2xl justify-center hover:bg-gray-700 cursor-pointer select-none">
@@ -18,7 +18,7 @@
 
         <form
             x-cloak
-            @submit.prevent="saveCertificate"
+            @submit.prevent="submitProject"
             class="flex flex-col py-3 gap-5">
             <div class="flex flex-col">
                 <p class="text-xl select-none cursor-default">Title</p>
@@ -31,14 +31,33 @@
             </div>
 
             <div class="flex flex-col">
-                <p class="text-xl select-none cursor-default">Type</p>
-                <select
-                    x-model="form.Type"
-                    class="border px-3 py-1 border-white bg-gray-800 rounded-2xl"
+                <p class="text-xl select-none cursor-default">Image</p>
+                <input
+                    type="file"
+                    accept="image/*"
+                    id="itemImageField"
+                    name="itemImage"
+                    @change="handleImageFile"
+                    class="ml-1 px-2 py-1 border rounded-2xl file:px-3 file:mr-2 file:border file:rounded-2xl cursor-pointer"
                     required>
-                    <option value="Education" default>Education</option>
-                    <option value="Certificate">Certificate</option>
-                </select>
+            </div>
+
+            <div class="flex flex-col mt-4 justify-center items-center">
+                <p class="font-medium mb-2">Image Preview</p>
+                <img
+                    id="previewImage"
+                    :src="previewImage"
+                    class="w-[480px] h-[270px] object-contain rounded-xl border" />
+            </div>
+
+            <div class="flex flex-col">
+                <p class="text-xl select-none cursor-default">Link</p>
+                <input
+                    type="text"
+                    x-model="form.Link"
+                    class="border px-3 py-1 border-white rounded-2xl"
+                    required>
+                </input>
             </div>
 
             <div class="flex flex-col">
@@ -56,7 +75,7 @@
                 <button
                     type="button"
                     @click="
-                            saveCertificate();
+                            saveProject();
                             updateModalOpen = !updateModalOpen;
                             document.body.classList.remove('modal-open');
                         "

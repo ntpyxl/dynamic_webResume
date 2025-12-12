@@ -10,13 +10,13 @@ function userComponent() {
                     body: JSON.stringify({ "action": "loginUser", "data": this.loginForm }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
-            }
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
 
-            // TODO: SWAL modal here, THEN reload on confirm
-            window.location.reload();
+                // TODO: SWAL modal here, THEN reload on confirm
+                window.location.reload();
 
             } catch (error) {
                 // TODO: SWAL modal here

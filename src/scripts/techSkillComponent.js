@@ -13,12 +13,12 @@ function techSkillComponent() {
                     body: JSON.stringify({ "action": "getData_TechSkill" }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
-            }
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
 
-            return result.data;
+                return result.data;
 
             } catch (error) {
                 console.log(error);
@@ -52,12 +52,12 @@ function techSkillComponent() {
                     }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
-            }
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
 
-            this.getData().then(data => this.loadParseData(data));
+                this.getData().then(data => this.loadParseData(data));
 
             } catch (error) {
                 console.log(error);

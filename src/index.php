@@ -186,7 +186,7 @@ session_start();
 
         <div
             id="projectSection"
-            x-data="{ ...projectComponent(), modalOpen: false }"
+            x-data="{ ...projectComponent(), createModalOpen: false , updateModalOpen: false }"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <h3 class="flex flex-row font-bold text-6xl items-center">
@@ -194,8 +194,8 @@ session_start();
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <div
                         @click="
-                            modalOpen = !modalOpen;
-                            document.body.classList.toggle('modal-open', modalOpen);
+                            createModalOpen = !createModalOpen;
+                            document.body.classList.toggle('modal-open', createModalOpen);
                         "
                         class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -231,6 +231,11 @@ session_start();
                                 </a>
                                 <?php if (isset($_SESSION['user_id'])) { ?>
                                     <div
+                                        @click="
+                                            openUpdateModal(name, project);
+                                            updateModalOpen = !updateModalOpen;
+                                            document.body.classList.toggle('modal-open', updateModalOpen);
+                                        "
                                         class="w-fit px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </div>
@@ -255,8 +260,13 @@ session_start();
             </a>
 
             <template x-teleport="body">
-                <div x-show="modalOpen" x-cloak x-transition>
+                <div x-show="createModalOpen" x-cloak x-transition>
                     <?php include 'components/c_projectModal.php' ?>
+                </div>
+            </template>
+            <template x-teleport="body">
+                <div x-show="updateModalOpen" x-cloak x-transition>
+                    <?php include 'components/u_projectModal.php' ?>
                 </div>
             </template>
         </div>

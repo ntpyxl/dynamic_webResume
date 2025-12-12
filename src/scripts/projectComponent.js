@@ -21,12 +21,12 @@ function projectComponent() {
                     body: JSON.stringify({ "action": "getData_Projects" }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
-            }
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
 
-            return result.data;
+                return result.data;
 
             } catch (error) {
                 console.log(error);
@@ -54,6 +54,26 @@ function projectComponent() {
                 this.form.Image = null;
                 this.previewImage = '';
             }
+        },
+
+        openUpdateModal(title, details) {
+            this.form.Id = details.Id;
+            this.form.Title = title;
+            this.form.Link = details.Link;
+            this.form.Description = details.Description;
+            this.previewImage = `images/${details.Image}`;
+        },
+
+        closeModal() {
+            this.form = {
+                "Id": null,
+                "Title": null,
+                "Image": null,
+                "ImageName": null,
+                "Link": null,
+                "Description": null
+            };
+            this.previewImage = "";
         },
 
         async submitProject() {
@@ -90,12 +110,60 @@ function projectComponent() {
                     }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
+
+                this.getData().then(data => this.loadParseData(data));
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async saveProject() {
+            if(this.form.Image != null) {
+                const formData = new FormData();
+                formData.append("action", "uploadImage_Projects");
+                formData.append("image", this.form.Image);
+
+                try {
+                    const response = await fetch(`api/api.php`, {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok || !result.success) {
+                        throw new Error(result.message || "Image upload failed");
+                    }
+
+                    this.form.ImageName = result.fileName;
+
+                } catch (error) {
+                    console.error("Upload error:", error);
+                    return { success: false, message: error.message };
+                }
             }
 
-            this.getData().then(data => this.loadParseData(data));
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "action": "saveData_Projects",
+                        "data": this.form
+                    }),
+                });
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
+
+                this.getData().then(data => this.loadParseData(data));
+                this.closeModal();
 
             } catch (error) {
                 console.log(error);
@@ -117,12 +185,12 @@ function projectComponent() {
                     }),
                 });
 
-            const result = await response.json();
-            if (!response.ok || result.success === false) {
-                throw new Error(result.message || "Request failed");
-            }
+                const result = await response.json();
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || "Request failed");
+                }
 
-            this.getData().then(data => this.loadParseData(data));
+                this.getData().then(data => this.loadParseData(data));
 
             } catch (error) {
                 console.log(error);

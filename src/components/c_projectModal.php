@@ -7,7 +7,8 @@
 
             <div
                 @click="
-                    modalOpen = !modalOpen
+                    closeModal();
+                    createModalOpen = !createModalOpen
                     document.body.classList.remove('modal-open');
                 "
                 class="flex w-10 h-10 p-2 text-2xl rounded-2xl justify-center hover:bg-gray-700 cursor-pointer select-none">
@@ -75,7 +76,8 @@
                     type="button"
                     @click="
                             submitProject();
-                            modalOpen = !modalOpen;
+                            closeModal();
+                            createModalOpen = !createModalOpen;
                             document.body.classList.remove('modal-open');
                         "
                     class="px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
@@ -85,7 +87,8 @@
                 <button
                     type="button"
                     @click="
-                            modalOpen = !modalOpen;
+                            closeModal();
+                            createModalOpen = !createModalOpen;
                             document.body.classList.remove('modal-open');
                         "
                     class="px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
