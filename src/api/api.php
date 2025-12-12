@@ -102,6 +102,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'uploadImage_Projects') {
     exit;
 }
 
+if ($action == "updateData_Projects") {
+    $statement = $pdo->prepare('INSERT INTO projects (education_name, education_type, education_description) VALUES (?, ?, ?)');
+    $statement->execute([$formData['Title'], $formData['Type'], $formData['Description']]);
+
+    echo json_encode(['success' => true]);
+    exit;
+}
+
 if ($action == "getData_Projects") {
     $statement = $pdo->prepare('SELECT * FROM projects');
     $statement->execute();
@@ -123,6 +131,14 @@ if ($action == "deleteData_Projects") {
 if ($action == "createData_Education") {
     $statement = $pdo->prepare('INSERT INTO education (education_name, education_type, education_description) VALUES (?, ?, ?)');
     $statement->execute([$formData['Title'], $formData['Type'], $formData['Description']]);
+
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+if ($action == "saveData_Education") {
+    $statement = $pdo->prepare('UPDATE education SET education_name = ?, education_type = ?, education_description = ? WHERE id = ?');
+    $statement->execute([$formData['Title'], $formData['Type'], $formData['Description'], $formData['Id']]);
 
     echo json_encode(['success' => true]);
     exit;

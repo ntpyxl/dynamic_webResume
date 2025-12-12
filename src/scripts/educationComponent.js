@@ -7,7 +7,6 @@ function educationCertificationComponent() {
         },
 
         certifications: {},
-        temp_certifications: {},
 
         form: {
             "Id": null,
@@ -47,6 +46,25 @@ function educationCertificationComponent() {
             }
         },
 
+        openUpdateModal(title, details) {
+            this.form.Id = details.Id;
+            this.form.Title = title;
+            this.form.Type = details.Type;
+            this.form.Description = details.Description;           
+            
+            console.log(this.form);
+        },
+
+        closeModal() {
+            this.form = {
+                "Id": null,
+                "Title": null,
+                "Type": "Education",
+                "Description": null
+            }
+
+        },
+
         async submitCertificate() {
             try { 
                 const response = await fetch(`api/api.php`, {
@@ -58,6 +76,28 @@ function educationCertificationComponent() {
                     }),
                 });
 
+            const result = await response.json();
+            if (!response.ok || result.success === false) {
+                throw new Error(result.message || "Request failed");
+            }
+
+            this.getData().then(data => this.loadParseData(data));
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async saveCertificate() {
+            try { 
+                const response = await fetch(`api/api.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "action": "saveData_Education",
+                        "data": this.form
+                    }),
+                });
             const result = await response.json();
             if (!response.ok || result.success === false) {
                 throw new Error(result.message || "Request failed");

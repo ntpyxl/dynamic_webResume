@@ -263,7 +263,7 @@ session_start();
 
         <div
             id="educationSection"
-            x-data="{ ...educationCertificationComponent(), modalOpen: false }"
+            x-data="{ ...educationCertificationComponent(), createModalOpen: false , updateModalOpen: false}"
             x-init="getData().then(data => loadParseData(data))"
             class="flex flex-col mx-16 my-16">
             <h3 class="flex flex-row font-bold text-6xl items-center">
@@ -271,8 +271,8 @@ session_start();
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <div
                         @click="
-                            modalOpen = !modalOpen;
-                            document.body.classList.toggle('modal-open', modalOpen);
+                            createModalOpen = !createModalOpen;
+                            document.body.classList.toggle('modal-open', createModalOpen);
                         "
                         class="text-2xl mx-3 px-3 py-2 rounded-4xl hover:bg-gray-700 cursor-pointer select-none">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -293,7 +293,13 @@ session_start();
                                     </p>
                                     <?php if (isset($_SESSION['user_id'])) { ?>
                                         <div class="flex flex-row gap-3">
-                                            <div class="px-2 py-1 hover:bg-gray-600 rounded-2xl cursor-pointer select-none">
+                                            <div
+                                                @click="
+                                                    openUpdateModal(name, certification);
+                                                    updateModalOpen = !updateModalOpen;
+                                                    document.body.classList.toggle('modal-open', updateModalOpen);
+                                                "
+                                                class="px-2 py-1 hover:bg-gray-600 rounded-2xl cursor-pointer select-none">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </div>
                                             <div
@@ -317,8 +323,13 @@ session_start();
             </div>
 
             <template x-teleport="body">
-                <div x-show="modalOpen" x-cloak x-transition>
+                <div x-show="createModalOpen" x-cloak x-transition>
                     <?php include 'components/c_educationModal.php' ?>
+                </div>
+            </template>
+            <template x-teleport="body">
+                <div x-show="updateModalOpen" x-cloak x-transition>
+                    <?php include 'components/u_educationModal.php' ?>
                 </div>
             </template>
         </div>

@@ -2,13 +2,13 @@
     <div class="max-w-[600px] max-h-4/5 overflow-y-auto bg-gray-800 px-6 py-4 rounded-xl shadow-xl relative">
         <div class="flex w-full justify-between">
             <p class="mr-3 mt-2 mb-1 font-light">
-                Do you want to add this to Education and Certifications?
+                Do you want to edit this to Education and Certifications?
             </p>
 
             <div
                 @click="
                     closeModal();
-                    createModalOpen = !createModalOpen;
+                    updateModalOpen = !updateModalOpen;
                     document.body.classList.remove('modal-open');
                 "
                 class="flex w-10 h-10 p-2 text-2xl rounded-2xl justify-center hover:bg-gray-700 cursor-pointer select-none">
@@ -18,7 +18,7 @@
 
         <form
             x-cloak
-            @submit.prevent="submitCertificate"
+            @submit.prevent="saveCertificate"
             class="flex flex-col py-3 gap-5">
             <div class="flex flex-col">
                 <p class="text-xl select-none cursor-default">Title</p>
@@ -56,20 +56,20 @@
                 <button
                     type="button"
                     @click="
-                            submitCertificate();
+                            saveCertificate();
                             closeModal();
-                            createModalOpen = !createModalOpen;
+                            updateModalOpen = !updateModalOpen;
                             document.body.classList.remove('modal-open');
                         "
                     class="px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
-                    Submit
+                    Save
                 </button>
 
                 <button
                     type="button"
                     @click="
-                            closeModal()
-                            createModalOpen = !createModalOpen;
+                            closeModal();
+                            updateModalOpen = !updateModalOpen;
                             document.body.classList.remove('modal-open');
                         "
                     class="px-5 py-1 border-2 border-white rounded-4xl hover:bg-white hover:text-black duration-150 cursor-pointer select-none">
