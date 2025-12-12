@@ -59,6 +59,7 @@ function projectComponent() {
         openUpdateModal(title, details) {
             this.form.Id = details.Id;
             this.form.Title = title;
+            this.form.ImageName = details.Image;
             this.form.Link = details.Link;
             this.form.Description = details.Description;
             this.previewImage = `images/${details.Image}`;
