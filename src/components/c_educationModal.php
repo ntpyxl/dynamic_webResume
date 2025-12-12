@@ -57,7 +57,6 @@
                     type="button"
                     @click="
                             submitCertificate();
-                            closeModal();
                             createModalOpen = !createModalOpen;
                             document.body.classList.remove('modal-open');
                         "

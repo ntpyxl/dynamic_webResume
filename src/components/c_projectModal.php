@@ -76,7 +76,6 @@
                     type="button"
                     @click="
                             submitProject();
-                            closeModal();
                             createModalOpen = !createModalOpen;
                             document.body.classList.remove('modal-open');
                         "

@@ -80,6 +80,7 @@ function educationCertificationComponent() {
                 }
 
                 this.getData().then(data => this.loadParseData(data));
+                this.closeModal();
 
             } catch (error) {
                 console.log(error);
